@@ -112,7 +112,7 @@ class GoogleStorageAssetManager extends AssetManager
                     $remoteFiles[$object->name()] = $object->name();
                 }
 
-                if ($cache) {
+                if ($cache && $remoteFiles) {
                     $cache->set($this->getCacheKey(['remote_files', $dir]), $remoteFiles, $this->cacheDuration);
                 }
             }
