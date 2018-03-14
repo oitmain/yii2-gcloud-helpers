@@ -77,6 +77,8 @@ class GoogleStorageAssetManager extends AssetManager
 
     protected function publishDirectory($src, $options)
     {
+        $result = parent::publishDirectory($src, $options);
+
         $forceDeploy = @$_GET[$this->forceDeployQuery] || !empty($options['forceCopy']) || ($this->forceCopy && !isset($options['forceCopy']));
         $files = static::getFiles($src, $options);
 
@@ -127,7 +129,7 @@ class GoogleStorageAssetManager extends AssetManager
             }
         }
 
-        return [$dir, $this->baseUrl . '/' . $dir];
+        return $result;
     }
 
     public static function getFiles($src, $options)
