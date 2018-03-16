@@ -85,8 +85,8 @@ class GoogleStorageAssetManager extends AssetManager
         // Remove path from files
         $baseDir = FileHelper::normalizePath($src);
         $baseDirLen = strlen($baseDir) + 1;
-        foreach ($files as &$file) {
-            $file = substr($file, $baseDirLen);
+        foreach ($files as $index => $file) {
+            $files[$index] = substr($file, $baseDirLen);
         }
 
         $dir = $this->hash($src);
@@ -125,6 +125,7 @@ class GoogleStorageAssetManager extends AssetManager
             $to = FileHelper::normalizePath($dir . DIRECTORY_SEPARATOR . $file, '/');
             if (!isset($remoteFiles[$to])) {
                 $gsTo = "gs://" . $this->googleStorageBucket . '/' . $to;
+                $this->getStorageClient(); // Wrap gs stream
                 copy($from, $gsTo);
             }
         }
